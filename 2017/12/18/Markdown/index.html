@@ -79,17 +79,19 @@
 
 
 
-<meta name="description" content="There are a thousand Hamlets in a thousand people&apos;s eyes.">
+<meta name="description" content="对于学习如何使用Markdown，借鉴了这一篇文章Markdown 基本语法，里面介绍了一些常用的并且基本的Markdown的语法。在使用Markdown之前，对他我并没有太深的了解，我的一个好朋友告诉我，全世界的程序员都在用Markdown写文章。当时我就决定我要尝试一下。在我上面提到的文章中也提到了Markdown的几个优点   ·它是易读（看起开舒服）、易写（语法简单）、易更改纯文本。处处体">
 <meta property="og:type" content="article">
 <meta property="og:title" content="学习使用Markdown">
 <meta property="og:url" content="http://yoursite.com/2017/12/18/Markdown/index.html">
 <meta property="og:site_name" content="赤山镇">
-<meta property="og:description" content="There are a thousand Hamlets in a thousand people&apos;s eyes.">
+<meta property="og:description" content="对于学习如何使用Markdown，借鉴了这一篇文章Markdown 基本语法，里面介绍了一些常用的并且基本的Markdown的语法。在使用Markdown之前，对他我并没有太深的了解，我的一个好朋友告诉我，全世界的程序员都在用Markdown写文章。当时我就决定我要尝试一下。在我上面提到的文章中也提到了Markdown的几个优点   ·它是易读（看起开舒服）、易写（语法简单）、易更改纯文本。处处体">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-18T07:12:28.000Z">
+<meta property="og:image" content="https://exp.bdstatic.com/static/common/widget/top-search-box/logo_1e63520.png">
+<meta property="og:updated_time" content="2017-12-18T08:55:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="学习使用Markdown">
-<meta name="twitter:description" content="There are a thousand Hamlets in a thousand people&apos;s eyes.">
+<meta name="twitter:description" content="对于学习如何使用Markdown，借鉴了这一篇文章Markdown 基本语法，里面介绍了一些常用的并且基本的Markdown的语法。在使用Markdown之前，对他我并没有太深的了解，我的一个好朋友告诉我，全世界的程序员都在用Markdown写文章。当时我就决定我要尝试一下。在我上面提到的文章中也提到了Markdown的几个优点   ·它是易读（看起开舒服）、易写（语法简单）、易更改纯文本。处处体">
+<meta name="twitter:image" content="https://exp.bdstatic.com/static/common/widget/top-search-box/logo_1e63520.png">
 
 
 
@@ -299,7 +301,72 @@
       
 
       
-        
+        <p>对于学习如何使用Markdown，借鉴了这一篇文章<a href="http://younghz.github.io/Markdown/" target="_blank" rel="noopener">Markdown 基本语法</a>，里面介绍了一些常用的并且基本的Markdown的语法。<br>在使用Markdown之前，对他我并没有太深的了解，我的一个好朋友告诉我，全世界的程序员都在用Markdown写文章。当时我就决定我要尝试一下。在我上面提到的文章中也提到了Markdown的几个优点  </p>
+<p>·它是易读（看起开舒服）、易写（语法简单）、易更改纯文本。处处体现着极简主义的影子。<br>·兼容HTML，可以转换为HTML格式发布。<br>·跨平台使用。<br>·越来越多的网站支持Markdown。</p>
+<p>等等  </p>
+<p>我写md的编辑器是Sublime，为了让编辑器使用起来更顺手，需要下载一些插件来是md的代码高亮，并且可以实时生成html文件来查看效果，在这一方面，在这里我就不做太多的描述了，网上可以查到的资料有很多。</p>
+<p>下面我会列举一些md的常用操作，也可以借此来提高自己对md的熟练度。</p>
+<p><strong>1.标题</strong></p>
+<p>1) 使用 <code>=</code> 和 <code>-</code> 标记一级标题和二级标题</p>
+<blockquote>
+<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2></blockquote>
+<p>2）使用<code>#</code>标记一到六级标题</p>
+<blockquote>
+<p>#一级标题</p>
+<p>##二级标题</p>
+<p>###三级标题</p>
+<p>####四级标题</p>
+<p>#####五级标题</p>
+<p>######六级标题</p>
+</blockquote>
+<p><strong>2.段落</strong></p>
+<p>段落的前后要有空行，所谓的空行是指没有文字内容。若想在段内强制换行的方式是使用两个以上空格加上回车（引用中换行省略回车）。</p>
+<p><strong>3.区块引用</strong></p>
+<blockquote>
+<p>区块引用</p>
+<blockquote>
+<p>嵌套引用</p>
+</blockquote>
+</blockquote>
+<p><strong>4.代码区块</strong></p>
+<pre><code>&lt;div&gt;
+    &lt;span&gt;Markdown&lt;/span&gt;
+&lt;/div&gt;
+</code></pre><p><strong>5.强调</strong></p>
+<p>在强调内容两侧分别加上<code>*</code>或者<code>_</code>，一个表示斜体，连个表示粗体。</p>
+<blockquote>
+<p><em>斜体</em><br><strong>粗体</strong></p>
+</blockquote>
+<p><strong>6.列表</strong></p>
+<p>使用<code>·</code>、<code>+</code>、或<code>-</code>标记无序列表</p>
+<blockquote>
+<ul>
+<li>1</li>
+<li>2</li>
+<li>3</li>
+</ul>
+</blockquote>
+<p><strong>7.分割线</strong></p>
+<p>分割线最常使用就是三个或以上<code>*</code>，还可以使用<code>-</code>和<code>_</code>。</p>
+<blockquote>
+<hr>
+<hr>
+<hr>
+</blockquote>
+<p><strong>8.链接</strong></p>
+<p>[百度](<a href="https://www.baidu.com/\" target="_blank" rel="noopener">https://www.baidu.com/\</a>)</p>
+<blockquote>
+<p><a href="https://www.baidu.com/" target="_blank" rel="noopener">百度</a></p>
+</blockquote>
+<p><strong>9.图片</strong></p>
+<p>需在链接的基础上前方加一个<code>!</code>。</p>
+<p><img src="https://exp.bdstatic.com/static/common/widget/top-search-box/logo_1e63520.png" alt=""></p>
+<p><strong>10.反斜杠</strong></p>
+<p>相当于反转义作用。使符号成为普通符号。</p>
+<p><strong>11.符号`</strong></p>
+<p>起到标记作用。</p>
+<p>现在在这篇文章中只是列举了一些开头所提到的文章中列举的一些用法，随着我对md的使用的增多，会不定期的往文章中增加新的内容。</p>
+
       
     </div>
     
@@ -319,22 +386,6 @@
       
       
 
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/12/14/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-          </div>
-        </div>
       
 
       
@@ -383,8 +434,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -403,7 +463,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">1</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -432,6 +492,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一级标题"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x4E00;&#x7EA7;&#x6807;&#x9898;" class="headerlink" title="&#x4E00;&#x7EA7;&#x6807;&#x9898;"></a>&#x4E00;&#x7EA7;&#x6807;&#x9898;</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#二级标题"><span class="nav-number">1.1.</span> <span class="nav-text"><a href="#&#x4E8C;&#x7EA7;&#x6807;&#x9898;" class="headerlink" title="&#x4E8C;&#x7EA7;&#x6807;&#x9898;"></a>&#x4E8C;&#x7EA7;&#x6807;&#x9898;</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
