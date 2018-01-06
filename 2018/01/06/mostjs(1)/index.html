@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="mostjs," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="mostjs是实现RP技术的一个不错的库，在其官方的github库上对其有这样的描述：It features an ultra-high performance, low overhead architecture, APIs for easily creating event streams from existing sources, like DOM events, and a small">
+<meta name="keywords" content="mostjs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mostjs源码阅读一">
+<meta property="og:url" content="http://yoursite.com/2018/01/06/mostjs(1)/index.html">
+<meta property="og:site_name" content="赤山镇">
+<meta property="og:description" content="mostjs是实现RP技术的一个不错的库，在其官方的github库上对其有这样的描述：It features an ultra-high performance, low overhead architecture, APIs for easily creating event streams from existing sources, like DOM events, and a small">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-06T10:18:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mostjs源码阅读一">
+<meta name="twitter:description" content="mostjs是实现RP技术的一个不错的库，在其官方的github库上对其有这样的描述：It features an ultra-high performance, low overhead architecture, APIs for easily creating event streams from existing sources, like DOM events, and a small">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/06/mostjs(1)/"/>
+
+
+
+
+
+  <title>mostjs源码阅读一 | 赤山镇</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赤山镇</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/06/mostjs(1)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Peter Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赤山镇">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">mostjs源码阅读一</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-06T11:20:26+08:00">
+                2018-01-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>mostjs是实现RP技术的一个不错的库，在其官方的github库上对其有这样的描述：<code>It features an ultra-high performance, low overhead architecture, APIs for easily creating event streams from existing sources, like DOM events, and a small but powerful set of operations for merging, filtering, transforming, and reducing event streams and time-varying values.</code>。对于其中的<code>ultra-high performance</code>的描述，我有着浓厚的兴趣，这次的源码阅读以此为切入点，想看看mostjs是使用了什么魔力，使其可以以很高的性能来实现较为复杂的RP技术。</p>
+<a id="more"></a>
+<p>以这段代码为基础，来一步步进行我们的阅读：</p>
+<pre><code>const most = require(&apos;../dist/most.js&apos;)
+let x
+most.of(1).observe(function (val) { x = val }).then(function(x) { console.log(x)})
+</code></pre><p>首先，我们来到的第一个方法是<code>most.of(x)</code>:</p>
+<pre><code>export function of (x) {
+  return new Stream(new Just(x))
+}
+
+function Just (x) {
+  this.value = x
+}
+
+export default function Stream (source) {
+  this.source = source
+}
+</code></pre><p>mostjs 通过这三个简单的函数构造了一个初步的Stream，相当于创建了一个<code>{ source: { value: x } }</code>的对象，可以看到，其构建的方法十分简单，所以速度相当之快。</p>
+<p>我们接下去来到了observe()这个函数</p>
+<pre><code>Stream.prototype.observe = Stream.prototype.forEach = function (f) {
+  return observe(f, this)
+}
+</code></pre><p>从这里我们可以看出<code>Stream.prototype.observe</code>，实际上是对先前生成的Strean做的一个遍历操作，同时在这里加入了一个回调函数f,对于我们所使用的事例代码来说，其实就是<code>function (val) { x = val }</code>。</p>
+<pre><code>export function observe (f, stream) {
+  return drain(tap(f, stream))
+}
+
+export function tap (f, stream) {
+  return new Stream(new Tap(f, stream.source))
+}
+
+function Tap (f, source) {
+  this.source = source
+  this.f = f
+}
+</code></pre><p>从这几个函数里，mostjs对传入的Stream又进行了一次包装，并且把函数f包裹在了其中</p>
+<pre><code>export function drain (stream) {
+  return run(stream.source)
+}
+</code></pre><p>这里第一次出现了 run 这个关键词 说明到这里对生成Stream这一步已经基本完成，下面就是对这个Stream进行的各种操作了。</p>
+<pre><code>export function withDefaultScheduler (source) {
+  return withScheduler(source, defaultScheduler)
+}
+</code></pre><p>这里要做一个说明 此处出现的withDefaultScheduler在observe中叫run，承接上面一个函数的<code>run(stream.source)</code>。在<code>withScheduler</code>中出现了<code>defaultScheduler</code>这个参数，这个参数在之前并没有遇到过，我们可以跳转到defaultScheduler，在此处增加一个debug，来看看这个参数是怎么来创建的。</p>
+<pre><code>var defaultScheduler = new Scheduler(new ClockTimer(), new Timeline())
+
+export default function ClockTimer () {}
+
+export default function Timeline () {
+  this.tasks = []
+}
+
+export default function Scheduler (timer, timeline) {
+  this.timer = timer
+  this.timeline = timeline
+
+  this._timer = null
+  this._nextArrival = Infinity
+
+  var self = this
+  this._runReadyTasksBound = function () {
+    self._runReadyTasks(self.now())
+  }
+}
+</code></pre><p>我们先简单的来看这几个函数，<code>Scheduler</code> 是mostjs里面核心的函数之一，需要传入两个参数，分别是一个时钟和一个列表，初步来看，时钟是一个空函数，任务列表是一个数组，都是代码中十分简单的构成。在这里也可以从侧面反映出mostjs的代码执行效率是很高的，所以他的速度很快。<code>defaultScheduler</code>这个参数就是这样生成的，我们再回到刚刚的步骤上来。</p>
+<pre><code>export function withScheduler (source, scheduler) {
+  return new Promise(function (resolve, reject) {
+    runSource(source, scheduler, resolve, reject)
+  })
+}
+
+function runSource (source, scheduler, resolve, reject) {
+  var disposable = dispose.settable()
+  var observer = new Drain(resolve, reject, disposable)
+  disposable.setDisposable(source.run(observer, scheduler))
+}
+</code></pre><p>这里出现了另一个mostjs中比较核心的<code>disposable</code>。</p>
+<pre><code>export function settable () {
+  return new SettableDisposable()
+}
+
+export default function SettableDisposable () {
+  this.disposable = void 0
+  this.disposed = false
+  this._resolve = void 0
+
+  var self = this
+  this.result = new Promise(function (resolve) {
+    self._resolve = resolve
+  })
+}
+</code></pre><p>通过这两个函数创建了一个disposable。同时这里也定义了一个observer，是一个Drain，同时Drain也定义了许多属性。接下去便是<code>source.run(observer, scheduler)</code>，这里的source对应的是<code>Tap</code>生成的。</p>
+<pre><code>Tap.prototype.run = function (sink, scheduler) {
+  return this.source.run(new TapSink(this.f, sink), scheduler)
+}
+
+function TapSink (f, sink) {
+  this.sink = sink
+  this.f = f
+}
+</code></pre><p>我们在这里又看到了一个<code>source.run</code>,我们可以回忆一下，这里对应的应该是<code>Just.prototype.run</code>，我们要注意的是在这里不要把各个参数，方法给搞混了。</p>
+<pre><code>Just.prototype.run = function (sink, scheduler) {
+  return scheduler.asap(new PropagateTask(runJust, this.value, sink))
+}
+
+export default function PropagateTask (run, value, sink) {
+  this._run = run
+  this.value = value
+  this.sink = sink
+  this.active = true
+}
+</code></pre><p>代码从这里开始构造<code>task</code>，我们可以注意到的是这里的<code>value</code>是1，这里的<code>sink</code>为上面创建的observer，同时这里有一个表示该任务状态的参数active，true表示未执行，false表示已经执行。从这里我们可以看到对于task这个核心，mostjs对其的构造同样很简单，这再一次地提高了mostjs的运行速度。</p>
+<pre><code>Scheduler.prototype.asap = function (task) {
+  return this.schedule(0, -1, task)
+}
+</code></pre><p>在这里又回到Scheduler这个函数，这个函数是操作task的关键，接下去会以此为展开介绍task的生命流程</p>
+<pre><code>Scheduler.prototype.schedule = function (delay, period, task) {
+  // 获取当前的时间
+  var now = this.now() 
+  var st = new ScheduledTask(now + Math.max(0, delay), period, task, this)
+  //插入task，十分重要的一步
+  this.timeline.add(st)
+  this._scheduleNextRun(now)
+  return st
+}
+
+export default function ScheduledTask (delay, period, task, scheduler) {
+  this.time = delay  //先前获得的现在的时间加上延迟的时间
+  this.period = period
+  this.task = task
+  this.scheduler = scheduler
+  this.active = true
+}
+</code></pre><p>接下去我们主要来看一下<code>Scheduler.timeline.add()</code>这一步，这一步由一系列的函数组成，在整个mostjs中十分关键</p>
+<pre><code>Timeline.prototype.add = function (st) {
+  insertByTime(st, this.tasks)
+}
+
+//对于这个函数大家可能很熟悉，这里使用了二分法来安排task，大家可以仔细看下这个函数
+function insertByTime (task, timeslots) {
+  var l = timeslots.length
+  if (l === 0) {
+    timeslots.push(newTimeslot(task.time, [task]))
+    return
+  }
+
+  var i = binarySearch(task.time, timeslots)
+
+  if (i &gt;= l) {
+    // task执行时间超过所有task
+    timeslots.push(newTimeslot(task.time, [task]))
+  } else if (task.time === timeslots[i].time) {
+    // task时间等于某一个task时间
+    timeslots[i].events.push(task)
+  } else {
+    // 这是最耗费的操作，插入到对应位置
+    timeslots.splice(i, 0, newTimeslot(task.time, [task]))
+  }
+}
+
+function removeAllFrom (f, timeslot) {
+  timeslot.events = base.removeAll(f, timeslot.events)
+}
+
+function binarySearch (t, sortedArray) {
+  var lo = 0
+  var hi = sortedArray.length
+  var mid, y
+
+  while (lo &lt; hi) {
+    mid = Math.floor((lo + hi) / 2)
+    y = sortedArray[mid]
+
+    if (t === y.time) {
+      return mid
+    } else if (t &lt; y.time) {
+      hi = mid
+    } else {
+      lo = mid + 1
+    }
+  }
+  return hi
+}
+
+//对push到tasks中的task进行了一次包装
+function newTimeslot (t, events) {
+  return { time: t, events: events }
+}
+</code></pre><p>到这里为止，我们已经成功的往tasks中插入了一个task，下面是<code>Scheduler._scheduleNextRun(now)</code>，这一步是在安排下一轮的工作。</p>
+<pre><code>Scheduler.prototype._scheduleNextRun = function (now) {
+  //若没有任务，则不安排
+  if (this.timeline.isEmpty()) {
+    return
+  }
+  var nextArrival = this.timeline.nextArrival()
+  if (this._timer === null) {
+    this._scheduleNextArrival(nextArrival, now)
+  } else if (nextArrival &lt; this._nextArrival) {
+    this._unschedule()
+    this._scheduleNextArrival(nextArrival, now)
+  }
+}
+
+Timeline.prototype.nextArrival = function () {
+  return this.isEmpty() ? Infinity : this.tasks[0].time
+}
+
+Scheduler.prototype._scheduleNextArrival = function (nextArrival, now) {
+  this._nextArrival = nextArrival
+  var delay = Math.max(0, nextArrival - now)
+  this._timer = this.timer.setTimer(this._runReadyTasksBound, delay)
+}
+
+ClockTimer.prototype.setTimer = function (f, dt) {
+  // dt = 0
+  return dt &lt;= 0 ? runAsap(f) : setTimeout(f, dt)
+}
+
+function runAsap (f) {
+  //对task又进行了一次包装
+  var task = new Asap(f)
+
+  defer(task)
+  return task
+}
+
+export function defer (task) {
+  return Promise.resolve(task).then(runTask)
+}
+
+export function runTask (task) {
+  try {
+    return task.run()
+  } catch (e) {
+    return task.error(e)
+  }
+}
+</code></pre><p>就是通过上面几个函数，mostjs完成了对下一轮工作的安排。现在我们的tasks中已经有了一个任务，完成了上述的一系列的操作，我们回到了<code>disposable.setDisposable(source.run(observer, scheduler))</code>，下一轮代码时就会去执行Promise.prototype.then中的runTask。</p>
+<pre><code>SettableDisposable.prototype.setDisposable = function (disposable) {
+  if (this.disposable !== void 0) {
+    throw new Error(&apos;setDisposable called more than once&apos;)
+  }
+
+  this.disposable = disposable
+
+  if (this.disposed) {
+    this._resolve(disposable.dispose())
+  }
+}
+</code></pre><p>好的到这一步，我们返回到了下面这一步，我们的到了一个包装好的Promise。</p>
+<pre><code>function withScheduler (source, scheduler) {
+  return new Promise(function (resolve, reject) {
+    runSource(source, scheduler, resolve, reject);
+  })
+}
+</code></pre><p>这里我们完成了第一轮代码的执行，接下去我们来看下一轮代码，还记得上面提到过的runTask么，我们将在这一轮中执行这部分。</p>
+<pre><code>export function runTask (task) {
+  try {
+    return task.run()
+  } catch (e) {
+    return task.error(e)
+  }
+}
+
+Asap.prototype.run = function () {
+  // 调用this.f，即_runReadyTasksBound
+  return this.active &amp;&amp; this.f()
+}
+
+export default function Scheduler (timer, timeline) {
+  this.timer = timer
+  this.timeline = timeline
+
+  this._timer = null
+  this._nextArrival = Infinity
+
+  var self = this
+  this._runReadyTasksBound = function () {
+    self._runReadyTasks(self.now())
+  }
+}
+</code></pre><p>从下面的这些函数开始，将要正在的执行这个task。</p>
+<pre><code>Scheduler.prototype._runReadyTasks = function (now) {
+  this._timer = null
+  this.timeline.runTasks(now, runTask)
+  this._scheduleNextRun(this.now())
+}
+
+Timeline.prototype.runTasks = function (t, runTask) {
+  var this$1 = this;
+
+  var tasks = this.tasks;
+  var l = tasks.length;
+  var i = 0;
+
+  // 先定位到time达到要求的，即小于当前时间的task都要参与
+  while (i &lt; l &amp;&amp; tasks[i].time &lt;= t) {
+    ++i;
+  }
+
+  // 截断tasks，slice操作很轻，是最快的复制数组操作
+  this.tasks = tasks.slice(i);
+
+  // Run all ready tasks
+  for (var j = 0; j &lt; i; ++j) {
+    // 因为每次运行task，都会有可能插入新的task，所以this.tasks是随时在变的
+    this$1.tasks = runTasks(runTask, tasks[j], this$1.tasks);
+  }
+};
+
+function runTasks (runTask, timeslot, tasks) {
+  var events = timeslot.events
+  for (var i = 0; i &lt; events.length; ++i) {
+    var task = events[i]
+
+    // 被执行过的task统统未active
+    if (task.active) {
+      runTask(task)
+      if (task.period &gt;= 0 &amp;&amp; task.active) {
+        task.time = task.time + task.period
+        insertByTime(task, tasks)
+      }
+    }
+  }
+  return tasks
+}
+
+export function runTask (task) {
+  try {
+    //这一次执行的为ScheduledTask.prototype.run
+    return task.run()
+  } catch (e) {
+    return task.error(e)
+  }
+}
+
+ScheduledTask.prototype.run = function () {
+  //这一次执行的为PropagateTask.prototype.run
+  return this.task.run(this.time)
+}
+
+PropagateTask.prototype.run = function (t) {
+  if (!this.active) {
+    return
+  }
+  //运行runJust函数
+  this._run(t, this.value, this.sink)
+}
+
+function runJust (t, x, sink) {
+  sink.event(t, x)
+  sink.end(t, void 0)
+}
+</code></pre><p>终于我们运行到了下面这一个函数，在这一步中我们运行了函数f，即事例中的function (val) { x = val }。</p>
+<pre><code>TapSink.prototype.event = function (t, x) {
+  var f = this.f
+  f(x)
+  this.sink.event(t, x)
+}
+</code></pre><p>下面我们来到了这个过程的结束阶段，下面我们会执行<code>sink.end(t, void 0)</code>。</p>
+<pre><code>Pipe.prototype.end = function (t, x) {
+  return this.sink.end(t, x)
+}
+
+Drain.prototype.end = function (t, x) {
+  if (!this.active) {
+    return
+  }
+  this.active = false
+  disposeThen(this._end, this._error, this._disposable, x)
+}
+</code></pre><p>这这里会执行一步<code>disposeThen(this._end, this._error, this._disposable, x)</code>，<code>dispose</code>的的概念在mostjs中是比较复杂和关键的，我打算单独来分析一下这个概念，在这里就不再很详细的展开了，在这里我们需要了解的是通过这个函数，我们会在原有的tasks数组中移除已经执行过的task。接下去我们会回到runTask函数中的那个循环中，来执行接下去的task。当我们没有多余的task后，我们会通过dispose回到最外层。</p>
+<p>这时候我们这一段代码算是全部执行完成了。这篇文章里详细地介绍了mostjs的构造Stream及observe的整一个过程，内容上应该算是写的比较详细。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mostjs/" rel="tag"># mostjs</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/25/RP20171225/" rel="next" title="浅析RP">
+                <i class="fa fa-chevron-left"></i> 浅析RP
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Peter Zhang" />
+            
+              <p class="site-author-name" itemprop="name">Peter Zhang</p>
+              <p class="site-description motion-element" itemprop="description">There are a thousand Hamlets in a thousand people's eyes.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Peter Zhang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
