@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="赤山镇">
 <meta property="og:description" content="在对mostjs的源码阅读过程中，遇到了很多的Promise。Promise是异步编程的一种解决方案。ES6将其写进了语言标准，同意了用法，提供了原生的Promise对象。对Promise有一个准确全面的了解对我们在阅读源码和写自己的代码的过程中，我相信会有一个较大的帮助">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-18T08:02:59.000Z">
+<meta property="og:updated_time" content="2018-01-18T08:09:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Promise">
 <meta name="twitter:description" content="在对mostjs的源码阅读过程中，遇到了很多的Promise。Promise是异步编程的一种解决方案。ES6将其写进了语言标准，同意了用法，提供了原生的Promise对象。对Promise有一个准确全面的了解对我们在阅读源码和写自己的代码的过程中，我相信会有一个较大的帮助">
@@ -317,108 +317,34 @@
 <pre><code><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve,reject</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="comment">/*异步操作成功*/</span>)&#123;</span><br><span class="line">        resolve(val)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        reject(err)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">promise.then(<span class="function"><span class="keyword">function</span>(<span class="params">val</span>)</span>&#123;</span><br><span class="line">    resolved</span><br><span class="line">&#125;,<span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</span><br><span class="line">    rejected</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 </code></pre><p>在这里<code>Promise</code>接收两个函数<code>resolve</code>和<code>reject</code>，<code>resolve</code>将<code>Promise</code>的状态从<code>pendin</code>g变为<code>resolved</code>，<code>reject</code>将<code>Promise</code>的状态从<code>pending</code>变为<code>rejected</code>，并将参数传递出去。在<code>Promise</code>生成以后，可以用<code>then</code>指定两种状态的回调函数。</p>
 <p>下面我们可以来看一个具体的例子</p>
-<pre><code>let promise = new Promise(function(resolve, reject) {
-  console.log(&apos;1&apos;);
-  resolve();
-});
-
-promise.then(function() {
-  console.log(&apos;3&apos;);
-});
-
-console.log(&apos;2&apos;);
-
-// 1
-// 2
-// 3
+<pre><code><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'1'</span>);</span><br><span class="line">  resolve();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">promise.then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'3'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'2'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
 </code></pre><p>我们可以看到各个console的输出顺序，Promise在新建以后会立即执行，最先输出的是1，在<code>then</code>方法中的回调函数将会在当前脚本所有同步任务结束以后才会执行。所以<code>then</code>方法中的<code>console</code>是在最后输出的。</p>
-<pre><code>const a = new Promise(function (resolve, reject) {
-  // ...
-});
-
-const b = new Promise(function (resolve, reject) {
-  // ...
-  resolve(a);
-})
+<pre><code><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> b = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  resolve(a);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 </code></pre><p>这是一个<code>resolve</code>方法中的参数也是一个<code>Promise</code>的例子，在这种情况下，<code>a</code>的状态决定了<code>b</code>的状态。在这里要明确的一点是执行resolve或者reject时，Promise内部的函数还是会继续运行下去。例如：</p>
-<pre><code>const promise = new Promise(function(resolve,reject){
-    resolve(val)
-    console.log(1)
-})
-
-primise.then(function(){
-    console.log(2)
-})
-
-//1
-//2
+<pre><code><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve,reject</span>)</span>&#123;</span><br><span class="line">    resolve(val)</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">primise.then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//1</span></span><br><span class="line"><span class="comment">//2</span></span><br></pre></td></tr></table></figure>
 </code></pre><p>下面我们来介绍几个Promise常用的方法,先定义一个带参数的<code>Promise</code>对象<code>promise</code></p>
 <p>1.<code>then</code></p>
-<pre><code>promise(a).then(
-    b =&gt; promise(val)
-).then(
-    c =&gt; console.log(&quot;resolved&quot;)
-    d =&gt; console.log(&quot;rejected&quot;)
-)
+<pre><code><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">promise(a).then(</span><br><span class="line">    b =&gt; promise(val)</span><br><span class="line">).then(</span><br><span class="line">    c =&gt; <span class="built_in">console</span>.log(<span class="string">"resolved"</span>)</span><br><span class="line">    d =&gt; <span class="built_in">console</span>.log(<span class="string">"rejected"</span>)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 </code></pre><p><code>then</code>可以用来链式调用，每一个<code>then</code>中的回调函数都会等待前一个<code>Promise</code>对象的状态发生改变才会进行。</p>
 <p>2.<code>catch</code></p>
-<pre><code>promise(a).then(
-    b =&gt; console.log(&quot;success&quot;)
-).catch(
-    error =&gt; console.log(error)
-)
+<pre><code><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">promise(a).then(</span><br><span class="line">    b =&gt; <span class="built_in">console</span>.log(<span class="string">"success"</span>)</span><br><span class="line">).catch(</span><br><span class="line">    error =&gt; <span class="built_in">console</span>.log(error)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 </code></pre><p>在异步操作的过程中如果抛出错误，<code>Promise</code>的状态会变为<code>rejected</code>，这时候就会调用<code>catch</code>中的回调函数，如果<code>then</code>中的回调函数抛出错误，同样会被<code>catch</code>捕获，同时调用<code>catch</code>中的回调函数。</p>
 <p>3.<code>all</code></p>
-<pre><code>const promises = [1,2,3].map(
-    val =&gt; promise(val)
-)
-
-Promise.all(promises).then(
-    val =&gt; console.log(val)
-).catch(
-    error =&gt; console.log(error)
-)
+<pre><code><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> promises = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>].map(</span><br><span class="line">    val =&gt; promise(val)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.all(promises).then(</span><br><span class="line">    val =&gt; <span class="built_in">console</span>.log(val)</span><br><span class="line">).catch(</span><br><span class="line">    error =&gt; <span class="built_in">console</span>.log(error)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 </code></pre><p><code>promises</code>是一个有三个<code>Promise</code>对象的数组，只有当这三个对象的状态都变为<code>resolved</code>，或者其中有一个变为<code>rejected</code>时，才会调用后面的回调函数。</p>
 <p>4.<code>race</code></p>
 <p><code>Promise.race</code>与<code>Promise.all</code>很相似，两者的不同是，使用<code>Promise.race</code>时，只要数组中一个<code>Promise</code>对象的状态发生改变，就会调用后年的回调函数。</p>
 <p>5.<code>resolve</code></p>
-<pre><code>Promise.resolve(&quot;hhh&quot;)
-
-//相当于
-new Promise(
-    resolve =&gt; resolve(&quot;hhh&quot;)
-)
+<pre><code><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.resolve(<span class="string">"hhh"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//相当于</span></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(</span><br><span class="line">    resolve =&gt; resolve(<span class="string">"hhh"</span>)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 </code></pre><p><code>Promise.resolve</code>相当于使用一个参数生成了一个<code>Promise</code>对象。对于返回的<code>Promise</code>的状态，我们不能笼统的认为是<code>resolved</code>，应该根据所传入的参数来确定。</p>
 <p>6.<code>reject</code></p>
-<pre><code>Promise.reject(&quot;hhh&quot;)
-
-//相当于
-new Promise(
-    (resolve,reject) =&gt; reject(&quot;hhh&quot;)
-)
+<pre><code><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.reject(<span class="string">"hhh"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//相当于</span></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(</span><br><span class="line">    (resolve,reject) =&gt; reject(<span class="string">"hhh"</span>)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 </code></pre><p><code>Promise.reject</code>相当于使用了一个参数生成了一个<code>Promise</code>对象，并且返回的`Promise的状态为rejected。</p>
 <p>7.<code>done</code></p>
-<pre><code>promise(a).then(
-    b =&gt; funB(b)
-).catch(
-    error =&gt; funC(error)
-).done()
-
-Promise.prototype.done = function (onFulfilled, onRejected) {
-  this.then(onFulfilled, onRejected)
-      .catch(function (reason) {
-          setTimeout(() =&gt; { throw reason }, 0);
-      });
-};
+<pre><code><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">promise(a).then(</span><br><span class="line">    b =&gt; funB(b)</span><br><span class="line">).catch(</span><br><span class="line">    error =&gt; funC(error)</span><br><span class="line">).done()</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.prototype.done = <span class="function"><span class="keyword">function</span> (<span class="params">onFulfilled, onRejected</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.then(onFulfilled, onRejected)</span><br><span class="line">      .catch(<span class="function"><span class="keyword">function</span> (<span class="params">reason</span>) </span>&#123;</span><br><span class="line">          setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123; <span class="keyword">throw</span> reason &#125;, <span class="number">0</span>);</span><br><span class="line">      &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </code></pre><p>上面的代码显示了<code>done</code>的使用和其内部实现的原理。其实很简单，当<code>Promise</code>对象的回调链在最后一步抛出错误时，我们就可能无法捕捉到这个错误，而<code>done</code>的作用便是处于回调链的最后一步，保证捕捉到任何可能出现的错误，并向全局抛出这个错误。</p>
 <p>8.<code>finall</code></p>
-<pre><code>promise(a).then(
-    b =&gt; funB(b)
-).catch(
-    error =&gt; funC(error)
-).finall(
-    finall =&gt; funcD(finall)
-)
+<pre><code><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">promise(a).then(</span><br><span class="line">    b =&gt; funB(b)</span><br><span class="line">).catch(</span><br><span class="line">    error =&gt; funC(error)</span><br><span class="line">).finall(</span><br><span class="line">    finall =&gt; funcD(finall)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 </code></pre><p><code>finall</code>方法表示不管前面的Promise的状态如何，<code>finall</code>中的函数都将执行。</p>
 
       
